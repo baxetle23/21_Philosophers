@@ -35,7 +35,7 @@ typedef struct s_args
 	t_table	*table;
 }	t_args;
 
-void	read_arguments(t_table *table, char **argv);
+int		read_arguments(t_table *table, char **argv);
 void	inits_philosophers(t_phil *philosopher, size_t count);
 void	init_table(t_table *table);
 long	time_now(struct timeval time);

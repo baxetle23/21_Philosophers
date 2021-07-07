@@ -105,7 +105,11 @@ int	main(int argc, char **argv)
 
 	if (argc >= 5 && argc <= 6)
 	{
-		read_arguments(&table, argv);
+		if (read_arguments(&table, argv))
+		{
+			printf("Erorr input\n");
+			return (0);
+		}
 		start_dinner(&table);
 	}
 	else

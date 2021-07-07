@@ -26,7 +26,7 @@ long	ft_atoi(const char *str)
 	return (nbr * flag);
 }
 
-void	read_arguments(t_table *table, char **argv)
+int	read_arguments(t_table *table, char **argv)
 {
 	table->numbers = ft_atoi(argv[1]);
 	table->to_die = ft_atoi(argv[2]);
@@ -36,4 +36,8 @@ void	read_arguments(t_table *table, char **argv)
 		table->must_to_eat = ft_atoi(argv[5]);
 	else
 		table->must_to_eat = -1;
+	if (table->numbers < 1 || table->to_die < 1
+		|| table->to_eat < 1 || table->to_sleep < 1)
+		return (1);
+	return (0);
 }
