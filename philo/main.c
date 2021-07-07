@@ -7,7 +7,7 @@ int	monitoring(t_phil *phils, t_table *table)
 	while (1)
 	{
 		i = -1;
-		while (++i < table->numbers)
+		while (++i < (int)table->numbers)
 		{
 			if (table->to_die < time_now(phils[i].time) - phils[i].last_eat)
 			{
@@ -72,16 +72,16 @@ void	*eat(void *args)
 	return (NULL);
 }
 
-void	start_dinner(t_table *table)
+int	start_dinner(t_table *table)
 {
 	pthread_t	*threads;
 	t_phil		*phils;
 	t_args		*arguments;
 	size_t		i;
 
-	get_memory(&threads, &phils, &arguments, table);
-	init_table(table);
-	inits_philosophers(phils, table->numbers);
+	if (get_memory(&threads, &phils, &arguments, table) || init_table(table)
+		|| inits_philosophers(phils, table->numbers))
+		return (1);
 	i = -1;
 	while (++i < table->numbers)
 	{
@@ -93,10 +93,12 @@ void	start_dinner(t_table *table)
 	{
 		gettimeofday(&phils[i].time, NULL);
 		phils[i].last_eat = 0;
-		pthread_create(&threads[i], NULL, eat, &arguments[i]);
+		if (pthread_create(&threads[i], NULL, eat, &arguments[i]))
+			return (1);
 	}
 	monitoring(phils, table);
 	free_memory(&threads, &phils, &arguments, table);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -110,7 +112,11 @@ int	main(int argc, char **argv)
 			printf("Erorr input\n");
 			return (0);
 		}
-		start_dinner(&table);
+		if (start_dinner(&table))
+		{
+			printf("Erorr init\n");
+			return (0);
+		}
 	}
 	else
 		printf("Erorr input\n");

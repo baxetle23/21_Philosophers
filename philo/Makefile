@@ -9,7 +9,7 @@ OBJS			= $(SRCS:.c=.o)
 				$(CC) $(CFLAGS) -c -o $@ $<
 
 RM				= rm -f
-CFLAGS			= #-Wall -Werror -Wextra
+CFLAGS			= -Wall -Werror -Wextra
 INCLUDES		= ./philo.h
 
 $(NAME):		$(OBJS) $(HEADER)

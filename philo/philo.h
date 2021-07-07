@@ -36,12 +36,12 @@ typedef struct s_args
 }	t_args;
 
 int		read_arguments(t_table *table, char **argv);
-void	inits_philosophers(t_phil *philosopher, size_t count);
-void	init_table(t_table *table);
+int		inits_philosophers(t_phil *philosopher, size_t count);
+int		init_table(t_table *table);
 long	time_now(struct timeval time);
 void	my_usleep(long time, struct timeval now);
 
-void	get_memory(pthread_t **t, t_phil **p, t_args **a, t_table *table);
+int		get_memory(pthread_t **t, t_phil **p, t_args **a, t_table *table);
 void	free_memory(pthread_t **t, t_phil **p, t_args **a, t_table *table);
 
 #endif

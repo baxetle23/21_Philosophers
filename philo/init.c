@@ -1,18 +1,23 @@
 #include "philo.h"
 
-void	init_table(t_table *table)
+int	init_table(t_table *table)
 {
 	size_t	i;
 
 	table->forks = (pthread_mutex_t *)malloc(sizeof (pthread_mutex_t)
 			* table->numbers);
+	if (table->forks == NULL)
+		return (1);
 	i = -1;
 	while (++i < table->numbers)
-		pthread_mutex_init(&(table->forks[i]), NULL);
-	pthread_mutex_init(&table->print, NULL);
+		if (pthread_mutex_init(&(table->forks[i]), NULL))
+			return (1);
+	if (pthread_mutex_init(&table->print, NULL))
+		return (1);
+	return (0);
 }
 
-void	inits_philosophers(t_phil *philosophers, size_t count)
+int	inits_philosophers(t_phil *philosophers, size_t count)
 {
 	size_t	i;
 
@@ -26,4 +31,5 @@ void	inits_philosophers(t_phil *philosophers, size_t count)
 			philosophers[i].right_fork = 0;
 		i++;
 	}
+	return (0);
 }
