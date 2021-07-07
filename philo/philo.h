@@ -21,10 +21,10 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	size_t			numbers;
-	size_t			to_die;
-	size_t			to_eat;
-	size_t			to_sleep;
-	size_t			must_to_eat;
+	int				to_die;
+	int				to_eat;
+	int				to_sleep;
+	int				must_to_eat;
 	size_t			count_to_eat;
 	long long		time;
 }					t_table;

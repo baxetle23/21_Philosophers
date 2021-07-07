@@ -9,7 +9,8 @@ int	monitoring(t_phil *phils, t_table *table)
 		i = -1;
 		while (++i < (int)table->numbers)
 		{
-			if (table->to_die < time_now(phils[i].time) - phils[i].last_eat)
+			if ((size_t)table->to_die
+				< time_now(phils[i].time) - phils[i].last_eat)
 			{
 				pthread_mutex_lock(&table->print);
 				printf("%ld %ld died\n", time_now(phils[i].time),
@@ -26,7 +27,6 @@ int	monitoring(t_phil *phils, t_table *table)
 			usleep(50);
 		}
 	}
-	return (0);
 }
 
 void	take_forks(t_table *table, t_phil *phil)
